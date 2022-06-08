@@ -1,0 +1,15 @@
+﻿@model TranslateStatusViewModel
+
+@if (Model.Success)
+{
+
+    <textarea class="form-control height-14" placeholder="...">@Model.Translated</textarea>
+
+}
+else
+{
+
+    <div class="alert alert-danger" role="alert">
+        @Model.Message
+    </div>
+}
