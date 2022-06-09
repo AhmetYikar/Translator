@@ -55,11 +55,11 @@ namespace Translator.Persistence.Repositories
         }
 
         //Save changes
-        public int SaveChanges(T model)
+        public int SaveChanges()
         {
             return _context.SaveChanges();
         }
-        public async Task<int> SaveChangesAsync(T model)
+        public async Task<int> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync();
         }

@@ -36,12 +36,13 @@ namespace Translator.Web
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //Require Confirmed Account will be changed as true after real smtp configuration.
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<TranslationDbContext>();
 
             services.AddHttpClient("FunTranslation", client =>
             {
-                client.BaseAddress = new Uri("https://api.funtranslations.com");              
+                client.BaseAddress = new Uri("https://api.funtranslations.com");
             });
 
             services.AddControllersWithViews();
@@ -75,6 +76,10 @@ namespace Translator.Web
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

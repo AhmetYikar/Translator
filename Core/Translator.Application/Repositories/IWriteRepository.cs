@@ -13,7 +13,7 @@ namespace Translator.Application.Repositories
         bool Update(T model);
         bool Delete(T model);
 
-        int SaveChanges(T model);
-        Task<int> SaveChangesAsync(T model);
+        int SaveChanges();
+        Task<int> SaveChangesAsync();
     }
 }
