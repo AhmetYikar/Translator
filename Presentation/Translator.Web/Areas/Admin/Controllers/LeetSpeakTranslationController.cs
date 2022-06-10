@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Translator.Application.Repositories;
+using Translator.Application.Repositories.UnitOfWork;
 
 namespace Translator.Web.Areas.Admin.Controllers
 {
@@ -14,11 +15,11 @@ namespace Translator.Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class LeetSpeakTranslationController : Controller
     {
-        private readonly ILeetSpeakTranslationReadRepository _leetSpeakTranslationReadRepository;
+        private readonly IUnitOfWork _uow;
 
-        public LeetSpeakTranslationController(ILeetSpeakTranslationReadRepository leetSpeakTranslationReadRepository)
+        public LeetSpeakTranslationController(IUnitOfWork uow)
         {
-            _leetSpeakTranslationReadRepository = leetSpeakTranslationReadRepository;
+            _uow = uow;
         }
 
 
@@ -28,8 +29,10 @@ namespace Translator.Web.Areas.Admin.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            var translations = _leetSpeakTranslationReadRepository.GetWhere(a => a.DeletedAt == null).ToList();
+            var translations = _uow.LeetSpeakTranslationRead.GetWhere(a => a.DeletedAt == null).ToList();
             return View(translations);
         }
     }
+
+   
 }

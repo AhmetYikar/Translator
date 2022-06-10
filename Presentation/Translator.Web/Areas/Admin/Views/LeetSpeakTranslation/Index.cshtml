@@ -1,6 +1,6 @@
 ﻿@model List<LeetSpeakTranslation>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Translated Texts";
 }
 
 
@@ -10,13 +10,14 @@
 
     </div>
     <div class="card-body">
-        <div class="table-responsive">
+        
             <table id="translationTable" class="display table">
                 <thead>
                     <tr>
                         <th>Text</th>
                         <th>Translated</th>
                         <th>Save Date</th>
+                       
                     </tr>
                 </thead>
                 <tbody>
@@ -26,15 +27,14 @@
                             <td>@item.Text</td>
                             <td>@item.Translated</td>
                             <td>@item.CreatedAt</td>
+                          
                         </tr>
 
                     }
 
                 </tbody>
             </table>
-        </div><div class="table-responsive">
-
-        </div>
+    
     </div>
 
 </div>
@@ -43,7 +43,11 @@
 @section scripts{
     <script>
         $(document).ready(function () {
-            $('#translationTable').DataTable();
+            $('#translationTable').DataTable(
+                {
+                    responsive: true
+                }
+            );
         });
     </script>
 }

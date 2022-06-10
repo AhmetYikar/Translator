@@ -13,9 +13,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Translator.Application.Repositories;
+using Translator.Application.Repositories.UnitOfWork;
 using Translator.Domain.Entities;
 using Translator.Persistence.Context;
 using Translator.Persistence.Repositories;
+using Translator.Persistence.Repositories.UnitOfWork;
 
 namespace Translator.Web
 {
@@ -49,8 +51,7 @@ namespace Translator.Web
             services.AddControllersWithViews();
 
             //service registrations            
-            services.AddScoped<ILeetSpeakTranslationReadRepository, LeetSpeakTranslationReadRepository>();
-            services.AddScoped<ILeetSpeakTranslationWriteRepository, LeetSpeakTranslationWriteRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

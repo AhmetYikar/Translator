@@ -46,13 +46,7 @@ namespace Translator.Persistence.Repositories
         {
             EntityEntry<T> entityEntry = Table.Update(model);
             return entityEntry.State == EntityState.Modified;
-        }
-        bool IWriteRepository<T>.Delete(T model)
-        {
-            model.DeletedAt = DateTime.Now;
-            EntityEntry<T> entityEntry = Table.Update(model);
-            return entityEntry.State == EntityState.Modified;
-        }
+        }       
 
         //Save changes
         public int SaveChanges()

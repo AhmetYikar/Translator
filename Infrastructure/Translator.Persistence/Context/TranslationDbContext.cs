@@ -17,5 +17,6 @@ namespace Translator.Persistence.Context
         }
 
         public DbSet<LeetSpeakTranslation> LeetSpeakTranslations { get; set; }
+        public DbSet<Log> Logs { get; set; }
     }
 }

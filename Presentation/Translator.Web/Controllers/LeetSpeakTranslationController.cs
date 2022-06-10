@@ -12,23 +12,22 @@ using Translator.Domain.Entities;
 using Translator.Web.Models;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
+using Translator.Application.Repositories.UnitOfWork;
 
 namespace Translator.Web.Controllers
 {
  
     public class LeetSpeakTranslationController : Controller
     {
-        private readonly ILeetSpeakTranslationWriteRepository _leetSpeakTranslationWriteRepository;
-        private readonly ILeetSpeakTranslationReadRepository _leetSpeakTranslationReadRepository;
+        private readonly IUnitOfWork _uow;
 
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<LeetSpeakTranslationController> _logger;
-        public LeetSpeakTranslationController(ILeetSpeakTranslationWriteRepository leetSpeakTranslationWriteRepository, IHttpClientFactory httpClientFactory, ILeetSpeakTranslationReadRepository leetSpeakTranslationReadRepository, ILogger<LeetSpeakTranslationController> logger)
+        public LeetSpeakTranslationController(IHttpClientFactory httpClientFactory, ILogger<LeetSpeakTranslationController> logger, IUnitOfWork uow)
         {
-            _leetSpeakTranslationWriteRepository = leetSpeakTranslationWriteRepository;
             _httpClientFactory = httpClientFactory;
-            _leetSpeakTranslationReadRepository = leetSpeakTranslationReadRepository;
             _logger = logger;
+            _uow = uow;
         }
 
 
@@ -54,11 +53,11 @@ namespace Translator.Web.Controllers
             }
 
             //If the text has been saved in our database before, retrieve it from our database without calling the API
-            var translateFromOurDataBase = await _leetSpeakTranslationReadRepository.GetSingleAsync(a => a.Text == text);
+            var translateFromOurDataBase = await _uow.LeetSpeakTranslationRead.GetSingleAsync(a => a.Text == text);
             if (translateFromOurDataBase != null)
             {
                 //logging
-                _logger.LogInformation($"The text translated from our database without calling the API {text}");
+                _logger.LogInformation($"The text translated from our database without calling the API; text: {text}");
 
                 model.Success = true;
                 model.Translated = translateFromOurDataBase.Translated;
@@ -92,8 +91,8 @@ namespace Translator.Web.Controllers
                         Text = text,
                         Translated = model.Translated
                     };
-                    await _leetSpeakTranslationWriteRepository.AddAsync(leetSpeakTranslation);
-                    await _leetSpeakTranslationWriteRepository.SaveChangesAsync();
+                    await _uow.LeetSpeakTranslationWrite.AddAsync(leetSpeakTranslation);
+                    await _uow.LeetSpeakTranslationWrite.SaveChangesAsync();
 
                 }
                 catch (Exception ex)
@@ -112,7 +111,7 @@ namespace Translator.Web.Controllers
                 {
                     var errorResult = await response.Content.ReadAsStringAsync();
                     //logg error result
-                    _logger.LogError($"FunTranslation API error response for {text}: {errorResult}");
+                    _logger.LogError($"FunTranslation API error response: {errorResult}");
 
                     var errorResponseModel = JsonConvert.DeserializeObject<FunTranslationResponseErrorModel>(errorResult);
                     model.Success = false;

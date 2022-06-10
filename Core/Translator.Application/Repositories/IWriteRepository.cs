@@ -10,8 +10,7 @@ namespace Translator.Application.Repositories
         Task<bool> AddRangeAsync(List<T> datas);
         bool Remove(T model);
         bool RemoveRange(List<T> datas);
-        bool Update(T model);
-        bool Delete(T model);
+        bool Update(T model);    
 
         int SaveChanges();
         Task<int> SaveChangesAsync();
