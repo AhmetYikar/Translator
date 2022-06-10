@@ -8,7 +8,7 @@ namespace Translator.Web.Models
     public class TranslateStatusViewModel
     {
         public bool Success { get; set; }
-        public string Message { get; set; }
+        public List<string> Messages { get; set; } = new List<string>();
         public string Translated { get; set; }
     }
 }

@@ -8,8 +8,11 @@
 }
 else
 {
+    foreach (var item in Model.Messages)
+    {
+        <div class="alert alert-danger" role="alert">
+            @item
+        </div>
+    }
 
-    <div class="alert alert-danger" role="alert">
-        @Model.Message
-    </div>
 }
