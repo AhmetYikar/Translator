@@ -8,13 +8,14 @@ using Translator.Application.Repositories.UnitOfWork;
 
 namespace Translator.Web.Areas.Admin.Controllers
 {
+    //[Authorize(Roles = "Admin")]
     [Authorize()]
     [Area("Admin")]
-    public class LogController : Controller
+    public class TranslationLogController : Controller
     {
         private readonly IUnitOfWork _uow;
 
-        public LogController(IUnitOfWork uow)
+        public TranslationLogController(IUnitOfWork uow)
         {
             _uow = uow;
         }

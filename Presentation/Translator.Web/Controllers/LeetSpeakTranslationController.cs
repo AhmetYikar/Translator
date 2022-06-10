@@ -64,7 +64,7 @@ namespace Translator.Web.Controllers
             if (translateFromOurDataBase != null)
             {
                 //logging
-                _logger.LogInformation($"The text translated from our database without calling the API; text: {textModel.Text}");
+                _logger.LogInformation($"The text was translated from our database without calling the API; text: {textModel.Text}");
 
                 statusModel.Success = true;
                 statusModel.Translated = translateFromOurDataBase.Translated;
@@ -73,6 +73,7 @@ namespace Translator.Web.Controllers
 
             //
             var client = _httpClientFactory.CreateClient("FunTranslation");
+           
 
             var response = await client.GetAsync($"/translate/leetspeak.json?text={textModel.Text}");
             var requestUriToBeLogged = response.RequestMessage.RequestUri.ToString();

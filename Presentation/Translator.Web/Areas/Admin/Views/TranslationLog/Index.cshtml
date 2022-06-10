@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Translator.Domain.Entities.Log>
+
+@{
+    ViewData["Title"] = "Translation Logs";
+}
+
+
+<div class="card mt-5">
+    <div class="card-header">
+        <h2>Translation Logs</h2>
+
+    </div>
+    <div class="card-body">
+
+        <table id="logTable" class="display table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MachineName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Logged)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Level)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Message)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Logger)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Callsite)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Exception)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MachineName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Logged)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Level)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Message)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Logger)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Callsite)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Exception)
+                        </td>
+                       
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#logTable').DataTable(
+                {
+                    responsive: true
+                }
+            );
+        });
+    </script>
+}
+

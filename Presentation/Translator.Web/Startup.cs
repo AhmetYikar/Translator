@@ -80,11 +80,11 @@ namespace Translator.Web
             {
                 endpoints.MapControllerRoute(
                     name: "areas",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{area:exists}/{controller=LeetSpeakTranslation}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=LeetSpeakTranslation}/{action=TranslateText}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

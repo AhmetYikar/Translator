@@ -10,8 +10,8 @@ using Translator.Application.Repositories.UnitOfWork;
 namespace Translator.Web.Areas.Admin.Controllers
 {
 
-    //[Authorize()]
     //[Authorize(Roles = "Admin")]
+    [Authorize()]
     [Area("Admin")]
     public class LeetSpeakTranslationController : Controller
     {
@@ -29,7 +29,7 @@ namespace Translator.Web.Areas.Admin.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            var translations = _uow.LeetSpeakTranslationRead.GetWhere(a => a.DeletedAt == null).ToList();
+            var translations = _uow.LeetSpeakTranslationRead.GetWhere(a => a.DeletedAt == null).OrderByDescending(a=>a.CreatedAt).ToList();
             return View(translations);
         }
     }

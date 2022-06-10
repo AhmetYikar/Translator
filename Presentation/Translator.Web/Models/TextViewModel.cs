@@ -8,9 +8,9 @@ namespace Translator.Web.Models
 {
     public class TextViewModel
     {
-        [RegularExpression(@"<[^>]*>", ErrorMessage = "No html tags allowed!")]
-        [Required(ErrorMessage = "Text cannot exceed 1024 characters")]
-        [MaxLength(1024, ErrorMessage = "Text is very long!")]
+        [RegularExpression(@"^[^<><|>]+$", ErrorMessage = "No html tags allowed!")]
+        [Required()]
+        [MaxLength(1024)]
         public string Text { get; set; }
     }
 }
