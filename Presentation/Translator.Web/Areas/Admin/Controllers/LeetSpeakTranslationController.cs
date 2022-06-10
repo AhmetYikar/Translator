@@ -9,7 +9,7 @@ using Translator.Application.Repositories;
 namespace Translator.Web.Areas.Admin.Controllers
 {
 
-    [Authorize()]
+    //[Authorize()]
     //[Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class LeetSpeakTranslationController : Controller

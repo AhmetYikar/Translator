@@ -10,21 +10,25 @@ using System.Threading.Tasks;
 using Translator.Application.Repositories;
 using Translator.Domain.Entities;
 using Translator.Web.Models;
+using Microsoft.Extensions.Logging;
+using NLog.Web;
 
 namespace Translator.Web.Controllers
 {
-    [Authorize()]
+ 
     public class LeetSpeakTranslationController : Controller
     {
         private readonly ILeetSpeakTranslationWriteRepository _leetSpeakTranslationWriteRepository;
         private readonly ILeetSpeakTranslationReadRepository _leetSpeakTranslationReadRepository;
 
         private readonly IHttpClientFactory _httpClientFactory;
-        public LeetSpeakTranslationController(ILeetSpeakTranslationWriteRepository leetSpeakTranslationWriteRepository, IHttpClientFactory httpClientFactory, ILeetSpeakTranslationReadRepository leetSpeakTranslationReadRepository)
+        private readonly ILogger<LeetSpeakTranslationController> _logger;
+        public LeetSpeakTranslationController(ILeetSpeakTranslationWriteRepository leetSpeakTranslationWriteRepository, IHttpClientFactory httpClientFactory, ILeetSpeakTranslationReadRepository leetSpeakTranslationReadRepository, ILogger<LeetSpeakTranslationController> logger)
         {
             _leetSpeakTranslationWriteRepository = leetSpeakTranslationWriteRepository;
             _httpClientFactory = httpClientFactory;
             _leetSpeakTranslationReadRepository = leetSpeakTranslationReadRepository;
+            _logger = logger;
         }
 
 
@@ -49,11 +53,13 @@ namespace Translator.Web.Controllers
                 return PartialView(model);
             }
 
-            //If the text has been saved in our database before, retrieve it from our database without call the API
-            var translateFromOurDataBase =await _leetSpeakTranslationReadRepository.GetSingleAsync(a=>a.Text.Trim()==text.Trim());
-            if (translateFromOurDataBase!=null)
+            //If the text has been saved in our database before, retrieve it from our database without calling the API
+            var translateFromOurDataBase = await _leetSpeakTranslationReadRepository.GetSingleAsync(a => a.Text == text);
+            if (translateFromOurDataBase != null)
             {
                 //logging
+                _logger.LogInformation($"The text translated from our database without calling the API {text}");
+
                 model.Success = true;
                 model.Translated = translateFromOurDataBase.Translated;
                 return PartialView(model);
@@ -64,6 +70,7 @@ namespace Translator.Web.Controllers
 
             var response = await client.GetAsync($"/translate/leetspeak.json?text={text}");
             var requestUriToBeLogged = response.RequestMessage.RequestUri.ToString();
+            _logger.LogInformation($"Request uri: {requestUriToBeLogged}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -71,10 +78,11 @@ namespace Translator.Web.Controllers
                 {
                     var result = await response.Content.ReadAsStringAsync();
                     //logg result 
-                    ///
+                    _logger.LogInformation($"FunTranslation API response: {result}");
+
 
                     var translationResponseModel = JsonConvert.DeserializeObject<FunTranslationResponseModel>(result);
-                   
+
                     model.Success = true;
                     model.Translated = translationResponseModel.Contents == null ? "" : translationResponseModel.Contents.Translated;
 
@@ -86,12 +94,13 @@ namespace Translator.Web.Controllers
                     };
                     await _leetSpeakTranslationWriteRepository.AddAsync(leetSpeakTranslation);
                     await _leetSpeakTranslationWriteRepository.SaveChangesAsync();
-                  
+
                 }
                 catch (Exception ex)
                 {
                     //logging
-                    //
+                    _logger.LogError(ex, "Translation process faced an error:");
+
                     model.Success = false;
                     model.Message = "Something went wrong!";
                 }
@@ -103,15 +112,16 @@ namespace Translator.Web.Controllers
                 {
                     var errorResult = await response.Content.ReadAsStringAsync();
                     //logg error result
+                    _logger.LogError($"FunTranslation API error response for {text}: {errorResult}");
 
-                    ///
                     var errorResponseModel = JsonConvert.DeserializeObject<FunTranslationResponseErrorModel>(errorResult);
                     model.Success = false;
                     model.Message = errorResponseModel.Error == null ? "" : errorResponseModel.Error.Message;
                 }
-                catch (Exception ex)
+                catch (JsonSerializationException ex)
                 {
                     //logging
+                    _logger.LogError(ex, "DeSerialize errorResult exception:");
 
                     model.Success = false;
                     model.Message = "Something went wrong!";
