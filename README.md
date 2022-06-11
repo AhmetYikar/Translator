@@ -40,7 +40,7 @@ $ dotnet run
 
 $ dotnet ef database update (for .NET CLI)
 
-$ Update-Database (VS PowerShell)
+$ Update-Database (for VS PowerShell)
 
 ### Licence
 
