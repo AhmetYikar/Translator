@@ -9,6 +9,8 @@ namespace Translator.Web.Models
     {
         public bool Success { get; set; }
         public List<string> Messages { get; set; } = new List<string>();
+        public string Text { get; set; }
         public string Translated { get; set; }
+
     }
 }

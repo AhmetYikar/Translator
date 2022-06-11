@@ -9,8 +9,14 @@ using Translator.Domain.Entities;
 
 namespace Translator.Persistence.Context
 {
+
+
     public class TranslationDbContext : IdentityDbContext
     {
+        public TranslationDbContext()
+        {
+
+        }
         public TranslationDbContext(DbContextOptions options) : base(options)
         {
 

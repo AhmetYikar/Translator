@@ -40,7 +40,7 @@ namespace Translator.Web.Controllers
 
 
         // This method gets called by ajax. It translates text entered by user and return the result as a partial view.
-        [HttpPost()]
+        [HttpPost()]        
         public async Task<IActionResult> _TranslateTextPartial(TextViewModel textModel)
         {
             var statusModel = new TranslateStatusViewModel();
@@ -57,9 +57,21 @@ namespace Translator.Web.Controllers
 
                 statusModel.Success = false;
                 return PartialView(statusModel);
-            }         
+            }
+           
+            statusModel =await LeetSpeakTranslate(textModel);
 
-            //If the text has been saved in our database before, retrieve it from our database without calling the API
+            return PartialView(statusModel);
+        }
+
+
+        //Translate method
+        [NonAction()]
+        public async Task<TranslateStatusViewModel>  LeetSpeakTranslate(TextViewModel textModel)
+        {
+            var statusModel = new TranslateStatusViewModel();
+
+            //If the text has been saved in our database before, retrieve it from our database without calling the API            
             var translateFromOurDataBase = await _uow.LeetSpeakTranslationRead.GetSingleAsync(a => a.Text == textModel.Text);
             if (translateFromOurDataBase != null)
             {
@@ -68,12 +80,13 @@ namespace Translator.Web.Controllers
 
                 statusModel.Success = true;
                 statusModel.Translated = translateFromOurDataBase.Translated;
-                return PartialView(statusModel);
+                statusModel.Text = translateFromOurDataBase.Text;
+                return statusModel;
             }
 
             //
             var client = _httpClientFactory.CreateClient("FunTranslation");
-           
+
 
             var response = await client.GetAsync($"/translate/leetspeak.json?text={textModel.Text}");
             var requestUriToBeLogged = response.RequestMessage.RequestUri.ToString();
@@ -91,6 +104,7 @@ namespace Translator.Web.Controllers
                     var translationResponseModel = JsonConvert.DeserializeObject<FunTranslationResponseModel>(result);
 
                     statusModel.Success = true;
+                    statusModel.Text= translationResponseModel.Contents == null ? "" : translationResponseModel.Contents.Text;
                     statusModel.Translated = translationResponseModel.Contents == null ? "" : translationResponseModel.Contents.Translated;
 
                     //insert into database
@@ -136,8 +150,7 @@ namespace Translator.Web.Controllers
 
             }
 
-
-            return PartialView(statusModel);
+            return statusModel;
         }
     }
 }

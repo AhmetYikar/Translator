@@ -21,6 +21,8 @@ namespace Translator.Persistence.Repositories.UnitOfWork
             LogRead = new LogReadRepository(_context);
         }
 
+     
+
         public ILeetSpeakTranslationReadRepository LeetSpeakTranslationRead { get; private set; }
         public ILeetSpeakTranslationWriteRepository LeetSpeakTranslationWrite { get; private set; }
         public ILogReadRepository LogRead { get; private set; }

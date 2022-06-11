@@ -5,19 +5,23 @@ VisualStudioVersion = 16.0.32413.511
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{EC5A29C2-75E0-49F3-8C0E-E4BB70CB1A87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translator.Domain", "Core\Translator.Domain\Translator.Domain.csproj", "{F689DEE4-9C6C-4AFC-B868-9C66A0790B77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Translator.Domain", "Core\Translator.Domain\Translator.Domain.csproj", "{F689DEE4-9C6C-4AFC-B868-9C66A0790B77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translator.Application", "Core\Translator.Application\Translator.Application.csproj", "{0E968BA2-C529-4C1D-912F-5D16E2A59234}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Translator.Application", "Core\Translator.Application\Translator.Application.csproj", "{0E968BA2-C529-4C1D-912F-5D16E2A59234}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{BB6F74E0-A184-4C48-9991-31E3C5D03C03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translator.Infrastructure", "Infrastructure\Translator.Infrastructure\Translator.Infrastructure.csproj", "{FC6BA5E5-C4DF-479C-B875-A2FC86A5D100}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Translator.Infrastructure", "Infrastructure\Translator.Infrastructure\Translator.Infrastructure.csproj", "{FC6BA5E5-C4DF-479C-B875-A2FC86A5D100}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translator.Persistence", "Infrastructure\Translator.Persistence\Translator.Persistence.csproj", "{70CC1EC6-1023-416E-B507-61DAB49D3560}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Translator.Persistence", "Infrastructure\Translator.Persistence\Translator.Persistence.csproj", "{70CC1EC6-1023-416E-B507-61DAB49D3560}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{A4B2C0AF-4646-4BCE-9A30-847689420D3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translator.Web", "Presentation\Translator.Web\Translator.Web.csproj", "{F6A57211-2114-450F-B901-851F3679F105}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Translator.Web", "Presentation\Translator.Web\Translator.Web.csproj", "{F6A57211-2114-450F-B901-851F3679F105}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{E519BA90-C10E-4578-ABBE-D1CFB26A987F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translator.UnitTest", "UnitTest\Translator.UnitTest\Translator.UnitTest.csproj", "{F4C2D1C7-09D3-4A0B-94F9-31CFD5BF6345}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,10 @@ Global
 		{F6A57211-2114-450F-B901-851F3679F105}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6A57211-2114-450F-B901-851F3679F105}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6A57211-2114-450F-B901-851F3679F105}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4C2D1C7-09D3-4A0B-94F9-31CFD5BF6345}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4C2D1C7-09D3-4A0B-94F9-31CFD5BF6345}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4C2D1C7-09D3-4A0B-94F9-31CFD5BF6345}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4C2D1C7-09D3-4A0B-94F9-31CFD5BF6345}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +63,7 @@ Global
 		{FC6BA5E5-C4DF-479C-B875-A2FC86A5D100} = {BB6F74E0-A184-4C48-9991-31E3C5D03C03}
 		{70CC1EC6-1023-416E-B507-61DAB49D3560} = {BB6F74E0-A184-4C48-9991-31E3C5D03C03}
 		{F6A57211-2114-450F-B901-851F3679F105} = {A4B2C0AF-4646-4BCE-9A30-847689420D3F}
+		{F4C2D1C7-09D3-4A0B-94F9-31CFD5BF6345} = {E519BA90-C10E-4578-ABBE-D1CFB26A987F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E42103D0-C889-4083-8F77-2969DF7296E2}
