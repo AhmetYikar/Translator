@@ -7,7 +7,7 @@
 
 ## Description
 Translator, is a web app aimed to allow users to translate English words into some other languages. For now, you can only translate words into ["l33tsp34k"](https://en.wikipedia.org/wiki/Leet).
-But new languages will be added to application soon.
+But new languages will be added soon.
 
 ## Project Details
 
